@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy 3-Month Anniversary, Nida! 💗</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .bouquet-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 290px;
+      margin: 0 auto 16px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: radial-gradient(circle, rgba(30, 10, 42, 0.8) 0%, rgba(7, 3, 10, 0.95) 100%);
+      border: 1px solid rgba(255, 133, 179, 0.28);
+      box-shadow: 0 0 35px rgba(255, 77, 148, 0.22);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .envelope-tag {
+      position: absolute;
+      bottom: 16px;
+      background: rgba(255, 77, 148, 0.85);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border: 1px solid #ffd166;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 77, 148, 0.5);
+      animation: pulseGlow 2s infinite ease-in-out;
+      z-index: 10;
+    }
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 77, 148, 0.4); }
+      50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 209, 102, 0.6); }
+    }
+    /* Letter Modal Overlay */
+    .letter-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 2, 8, 0.88);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.4s ease;
+    }
+    .letter-card {
+      background: linear-gradient(145deg, #220d30, #14071c);
+      border: 1px solid var(--pink-primary);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 460px;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px 22px;
+      text-align: left;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 77, 148, 0.25);
+    }
+    .letter-card h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      color: var(--pink-glow);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .letter-body {
+      font-size: 0.96rem;
+      line-height: 1.65;
+      color: #f7e6f0;
+      margin-bottom: 22px;
+      white-space: pre-line;
+    }
+    .close-letter-btn {
+      width: 100%;
+      text-align: center;
+    }
+    /* Finale Celebration Section */
+    .finale-box {
+      display: none;
+      width: 100%;
+      animation: fadeIn 0.6s ease;
+    }
+    .kiss-counter {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold-accent);
+      margin: 12px 0 6px;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div class="ambient-bg" id="petals"></div>
+
+  <div class="container" id="mainContainer">
+    <span class="page-badge">Grand Finale • 3 Months Together</span>
+    <h1>For My Babyy💗 🌷✨</h1>
+    <p class="subtitle">Tap the golden envelope resting on your custom tulip bouquet.</p>
+
+    <div class="bouquet-box">
+      <div id="bouquetCanvas" style="width:100%; height:100%;"></div>
+      <button class="envelope-tag" onclick="openLetter()">💌 Tap to Read Your Letter</button>
+    </div>
+
+    <!-- Final Surprise Box (Revealed after reading letter) -->
+    <div class="finale-box" id="finaleBox">
+      <div class="glass-box" style="border-color: var(--gold-accent);">
+        <h3 style="color: var(--gold-accent); font-size: 1.3rem; margin-bottom: 8px;">👑 Official 3-Month VIP Pass</h3>
+        <p style="font-size: 0.92rem; color: #ffe3f0; margin-bottom: 14px;">
+          Redeemable anytime for unlimited food, late-night calls, and Affan's undivided attention forever! 🎟️✨
+        </p>
+        <div class="kiss-counter" id="kissDisplay">Kisses sent: 0 💋</div>
+        <button class="btn-glow" onclick="sendKiss()" style="background: linear-gradient(135deg, #ffd166, #ff9f1c); color: #1a0826; font-weight: 700;">
+          Tap to Send Affan a Kiss 💗
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Letter Modal -->
+  <div class="letter-modal" id="letterModal">
+    <div class="letter-card">
+      <h2>To my babyy💗 🌷✨</h2>
+      <div class="letter-body">Happy 3-month anniversary, my love!! 🥹🤍🎉
+
+Honestly, it feels like just yesterday we were best friends talking about literally everything, and now it’s already been three whole months since you officially became mine on August 20th 🥺💍✨. Time flies so fast when you're with your favorite person, yet at the same time, I can't even remember what life felt like before I had you in it 💭💗.
+
+You really have no idea how much you mean to me 🥹💞. Every single time my phone lights up with your name, I still get butterflies—literally every single time 🦋💓. Your smile just instantly fixes my worst days 😊☀️, your voice makes everything feel so calm and peaceful 🎧🕊️, and honestly, just having you in my life makes me the luckiest guy in the world 🌍🫶.
+
+Thank you for all the endless laughs 😂❤️, the late-night calls 🌙📞, our inside jokes 🤭✨, and for just being the most amazing, caring girl ever 🌷👑. You're my safe place, my best friend, and my absolute everything 🫂💖. We still have so many more memories to make together, and I’m never letting you go 🔒💘.
+
+I love you way more than words could ever explain, baby 🥹💗♾️.
+
+**Forever yours, Affan 🫂✨🌹💞**</div>
+      <button class="btn-glow close-letter-btn" onclick="closeLetter()">Claim Your Surprise 🎆</button>
+    </div>
+  </div>
+
+  <script>
+    const bg = document.getElementById('petals');
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = i % 2 === 0 ? '🌷' : '💖';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (7 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      bg.appendChild(p);
+    }
+
+    // Three.js 3D Bouquet Preview
+    const container = document.getElementById('bouquetCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 16;
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    scene.add(new THREE.AmbientLight(0xffffff, 1.3));
+    const pLight = new THREE.PointLight(0xff4d94, 2.5, 30);
+    pLight.position.set(0, 5, 8);
+    scene.add(pLight);
+
+    // Group of stylized 3D Tulip heads & stems
+    const bouquetGroup = new THREE.Group();
+    
+    for (let i = 0; i < 5; i++) {
+      const stemGeo = new THREE.CylinderGeometry(0.06, 0.06, 7, 8);
+      const stemMat = new THREE.MeshBasicMaterial({ color: 0x4e9f3d });
+      const stem = new THREE.Mesh(stemGeo, stemMat);
+      stem.position.set((i - 2) * 0.5, -2, 0);
+      stem.rotation.z = (i - 2) * -0.08;
+      bouquetGroup.add(stem);
+
+      // Tulip Bloom Head
+      const bulbGeo = new THREE.SphereGeometry(0.6, 12, 12);
+      bulbGeo.scale(1, 1.4, 0.8);
+      const bulbMat = new THREE.MeshPhysicalMaterial({ color: 0xff3385, roughness: 0.3, emissive: 0x4d001a });
+      const bulb = new THREE.Mesh(bulbGeo, bulbMat);
+      bulb.position.set((i - 2) * 0.7, 1.8 + Math.abs(i - 2) * 0.2, 0);
+      bouquetGroup.add(bulb);
+    }
+
+    scene.add(bouquetGroup);
+
+    function animateBouquet() {
+      requestAnimationFrame(animateBouquet);
+      bouquetGroup.rotation.y = Math.sin(Date.now() * 0.0015) * 0.25;
+      renderer.render(scene, camera);
+    }
+    animateBouquet();
+
+    // Letter Handlers
+    function openLetter() {
+      document.getElementById('letterModal').style.display = 'flex';
+    }
+
+    function closeLetter() {
+      document.getElementById('letterModal').style.display = 'none';
+      document.querySelector('.bouquet-box').style.display = 'none';
+      document.getElementById('finaleBox').style.display = 'block';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Kiss Counter
+    let kisses = 0;
+    function sendKiss() {
+      kisses++;
+      document.getElementById('kissDisplay').textContent = `Kisses sent: ${kisses} 💋💗`;
+      // Create floating heart effect
+      const h = document.createElement('div');
+      h.textContent = '💋';
+      h.style.position = 'fixed';
+      h.style.left = (Math.random() * 80 + 10) + 'vw';
+      h.style.top = '70vh';
+      h.style.fontSize = '2rem';
+      h.style.transition = 'all 1s ease-out';
+      h.style.zIndex = '999';
+      document.body.appendChild(h);
+      setTimeout(() => {
+        h.style.transform = 'translateY(-120px) scale(1.4)';
+        h.style.opacity = '0';
+      }, 50);
+      setTimeout(() => h.remove(), 1050);
+    }
+  </script>
+</body>
+</html>
