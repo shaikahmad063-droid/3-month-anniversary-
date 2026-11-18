@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Months With You 💗 | Step 1</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .radar-wrap {
+      position: relative;
+      width: 210px;
+      height: 210px;
+      margin: 10px auto 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 77, 148, 0.45);
+      background: radial-gradient(circle, rgba(255, 77, 148, 0.14) 0%, rgba(10, 4, 15, 0.9) 70%);
+      box-shadow: 0 0 30px rgba(255, 77, 148, 0.25), inset 0 0 25px rgba(255, 77, 148, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .radar-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 133, 179, 0.28);
+    }
+    .ring-1 { width: 140px; height: 140px; }
+    .ring-2 { width: 75px; height: 75px; }
+    .radar-sweep {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 0;
+      left: 50%;
+      transform-origin: bottom left;
+      background: linear-gradient(90deg, rgba(255, 77, 148, 0.55), transparent);
+      animation: sweep 2.4s linear infinite;
+      display: none;
+    }
+    .radar-sweep.active { display: block; }
+    @keyframes sweep {
+      to { transform: rotate(360deg); }
+    }
+    .center-icon {
+      font-size: 2.6rem;
+      z-index: 2;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .scan-log {
+      min-height: 56px;
+      font-size: 0.95rem;
+      color: var(--pink-glow);
+      font-weight: 500;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .result-card {
+      display: none;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255, 77, 148, 0.14);
+      border: 1px solid var(--pink-primary);
+      animation: popIn 0.5s ease forwards;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg" id="petals"></div>
+
+  <div class="container">
+    <span class="page-badge">Chapter 01 • Global Scan</span>
+    <h1>Locating the World's Most Beautiful Girl 🌍✨</h1>
+    <p class="subtitle">Satellite database ready. Tap below to scan all 8.1 billion people on Earth.</p>
+
+    <div class="glass-box">
+      <div class="radar-wrap" id="radar">
+        <div class="radar-ring ring-1"></div>
+        <div class="radar-ring ring-2"></div>
+        <div class="radar-sweep" id="sweep"></div>
+        <div class="center-icon" id="centerIcon">🛰️</div>
+      </div>
+
+      <div class="scan-log" id="scanLog">Awaiting scan command...</div>
+
+      <button class="btn-glow" id="scanBtn" onclick="startScan()">Start Global Scan 🔍</button>
+
+      <div class="result-card" id="resultCard">
+        <div style="font-size: 0.8rem; letter-spacing: 1.5px; color: #ffd166; margin-bottom: 4px;">100.00% MATCH CONFIRMED</div>
+        <h2 style="font-size: 1.55rem; color: #fff; margin-bottom: 6px;">Nida (babyy💗) 🌷</h2>
+        <p style="font-size: 0.92rem; color: #f5d6e6;">Obviously it's you, my love. Nobody else even comes close! 🥺👑</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="page2.html" class="btn-glow next-btn" id="nextBtn">Next Page →</a>
+  </div>
+
+  <script>
+    // Floating tulips
+    const bg = document.getElementById('petals');
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = i % 2 === 0 ? '🌷' : '✨';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (7 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      bg.appendChild(p);
+    }
+
+    const steps = [
+      "Connecting to global satellites... 🛰️",
+      "Scanning 8,100,000,000 people... 🌐",
+      "Filtering for unmatched beauty & pure heart... 💫",
+      "Narrowing coordinates down to one girl... 📍",
+      "Target Locked! 🎯💗"
+    ];
+
+    function startScan() {
+      const btn = document.getElementById('scanBtn');
+      const sweep = document.getElementById('sweep');
+      const log = document.getElementById('scanLog');
+      const icon = document.getElementById('centerIcon');
+
+      btn.style.display = 'none';
+      sweep.classList.add('active');
+      icon.textContent = '📡';
+
+      let i = 0;
+      log.textContent = steps[0];
+
+      const interval = setInterval(() => {
+        i++;
+        if (i < steps.length) {
+          log.textContent = steps[i];
+        } else {
+          clearInterval(interval);
+          sweep.classList.remove('active');
+          icon.textContent = '💗';
+          icon.style.transform = 'scale(1.35)';
+          log.style.display = 'none';
+          document.getElementById('resultCard').style.display = 'block';
+          document.getElementById('nextBtn').classList.add('visible');
+        }
+      }, 1150);
+    }
+  </script>
+</body>
+  </html>
+    
