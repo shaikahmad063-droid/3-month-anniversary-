@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Months With You 💗 | Step 4</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .canvas-container {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 380px;
+      margin: 0 auto 14px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: radial-gradient(circle, rgba(27, 8, 38, 0.85) 0%, rgba(7, 3, 10, 0.95) 100%);
+      border: 1px solid rgba(255, 133, 179, 0.25);
+      box-shadow: 0 0 35px rgba(255, 77, 148, 0.2);
+    }
+    #threeCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .hint-text {
+      font-size: 0.85rem;
+      color: var(--pink-glow);
+      margin-bottom: 12px;
+    }
+  </style>
+  <!-- Three.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+  <div class="ambient-bg" id="petals"></div>
+
+  <div class="container">
+    <span class="page-badge">Chapter 04 • 3D Universe</span>
+    <h1>My Universe Rehearse 🌌💗</h1>
+    <p class="subtitle">Drag to rotate the 3D heart, and tap anywhere to trigger love shocks!</p>
+
+    <div class="canvas-container" id="canvasBox">
+      <canvas id="threeCanvas"></canvas>
+    </div>
+
+    <div class="hint-text" id="hint">✨ Tap the 3D heart or screen for surprises!</div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="page5.html" class="btn-glow next-btn" id="nextBtn">Next Page →</a>
+  </div>
+
+  <script>
+    const bg = document.getElementById('petals');
+    for (let i = 0; i < 12; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = i % 2 === 0 ? '🌷' : '✨';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (7 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      bg.appendChild(p);
+    }
+
+    // Three.js Scene Setup
+    const container = document.getElementById('canvasBox');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 28;
+
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), antialias: true, alpha: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xff4d94, 3, 50);
+    pointLight.position.set(5, 5, 10);
+    scene.add(pointLight);
+
+    // Create 3D Heart Shape using ExtrudeGeometry
+    const x = 0, y = 0;
+    const heartShape = new THREE.Shape();
+    heartShape.moveTo(x + 5, y + 5);
+    heartShape.bezierCurveTo(x + 5, y + 5, x + 4, y, x, y);
+    heartShape.bezierCurveTo(x - 6, y, x - 6, y + 7, x - 6, y + 7);
+    heartShape.bezierCurveTo(x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19);
+    heartShape.bezierCurveTo(x + 13, y + 15.4, x + 16, y + 11, x + 16, y + 7);
+    heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
+    heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
+
+    const extrudeSettings = { depth: 3, bevelEnabled: true, bevelSegments: 5, steps: 2, bevelSize: 1, bevelThickness: 1 };
+    const geometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+    geometry.center();
+
+    const material = new THREE.MeshPhysicalMaterial({
+      color: 0xff3385,
+      emissive: 0x990033,
+      roughness: 0.2,
+      metalness: 0.3,
+      clearcoat: 1.0,
+      clearcoatRoughness: 0.1,
+      transparent: true,
+      opacity: 0.92
+    });
+
+    const heartMesh = new THREE.Mesh(geometry, material);
+    heartMesh.scale.set(0.65, 0.65, 0.65);
+    scene.add(heartMesh);
+
+    // Floating Star / Particle Galaxy around heart
+    const particlesCount = 250;
+    const posArray = new Float32Array(particlesCount * 3);
+    for(let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 45;
+    }
+    const particlesGeo = new THREE.BufferGeometry();
+    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    const particlesMat = new THREE.PointsMaterial({ size: 0.25, color: 0xffa3c2, transparent: true, opacity: 0.7 });
+    const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
+    scene.add(particlesMesh);
+
+    // Interaction / Drag to rotate
+    let isDragging = false;
+    let prevMouseX = 0, prevMouseY = 0;
+    let tapCount = 0;
+
+    container.addEventListener('pointerdown', (e) => {
+      isDragging = true;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+      triggerTapEffect();
+    });
+
+    window.addEventListener('pointermove', (e) => {
+      if (!isDragging) return;
+      const deltaX = e.clientX - prevMouseX;
+      const deltaY = e.clientY - prevMouseY;
+      heartMesh.rotation.y += deltaX * 0.008;
+      heartMesh.rotation.x += deltaY * 0.008;
+      prevMouseX = e.clientX;
+      prevMouseY = e.clientY;
+    });
+
+    window.addEventListener('pointerup', () => { isDragging = false; });
+
+    const messages = [
+      "3 Months of Us 🥹", "My Best Friend 🤍", "My Favorite Person 🌷", 
+      "Infinite Love ♾️", "Babyy💗 ✨", "Forever & Always 💍"
+    ];
+
+    function triggerTapEffect() {
+      tapCount++;
+      // Quick scale pulse
+      heartMesh.scale.set(0.78, 0.78, 0.78);
+      setTimeout(() => heartMesh.scale.set(0.65, 0.65, 0.65), 200);
+
+      if (tapCount >= 3) {
+        document.getElementById('hint').textContent = "🔓 Universe fully synchronized!";
+        document.getElementById('nextBtn').classList.add('visible');
+      }
+    }
+
+    // Auto unlock fallback after 5s just in case
+    setTimeout(() => {
+      document.getElementById('nextBtn').classList.add('visible');
+    }, 5000);
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+      if (!isDragging) {
+        heartMesh.rotation.y += 0.012;
+        heartMesh.rotation.z = Math.sin(Date.now() * 0.002) * 0.08;
+      }
+      particlesMesh.rotation.y -= 0.002;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
