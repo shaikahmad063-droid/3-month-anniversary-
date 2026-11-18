@@ -6,48 +6,53 @@
   <title>Happy 3-Month Anniversary, Nida! 💗</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .bouquet-box {
+    .bouquet-stage {
       position: relative;
       width: 100%;
       max-width: 420px;
-      height: 290px;
+      height: 410px;
       margin: 0 auto 16px;
-      border-radius: 22px;
+      border-radius: 26px;
       overflow: hidden;
-      background: radial-gradient(circle, rgba(30, 10, 42, 0.8) 0%, rgba(7, 3, 10, 0.95) 100%);
-      border: 1px solid rgba(255, 133, 179, 0.28);
-      box-shadow: 0 0 35px rgba(255, 77, 148, 0.22);
+      background: radial-gradient(circle at 50% 38%, #2e0f3d 0%, #12051a 58%, #060209 100%);
+      border: 1px solid rgba(255, 182, 213, 0.35);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 77, 148, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
     }
+    #hdBouquetCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
     .envelope-tag {
       position: absolute;
-      bottom: 16px;
-      background: rgba(255, 77, 148, 0.85);
-      backdrop-filter: blur(10px);
+      bottom: 18px;
+      background: linear-gradient(135deg, rgba(255, 51, 133, 0.92), rgba(190, 24, 93, 0.95));
+      backdrop-filter: blur(12px);
       color: #fff;
-      padding: 10px 22px;
+      padding: 12px 26px;
       border-radius: 999px;
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      border: 1px solid #ffd166;
+      letter-spacing: 0.3px;
+      border: 1.5px solid #ffd166;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 77, 148, 0.5);
-      animation: pulseGlow 2s infinite ease-in-out;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 22px rgba(255, 77, 148, 0.65);
+      animation: pulseGlow 2.2s infinite ease-in-out;
       z-index: 10;
     }
     @keyframes pulseGlow {
-      0%, 100% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 77, 148, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(255, 209, 102, 0.6); }
+      0%, 100% { transform: scale(1); box-shadow: 0 8px 25px rgba(0,0,0,0.6), 0 0 18px rgba(255, 77, 148, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0,0,0,0.7), 0 0 30px rgba(255, 209, 102, 0.85); }
     }
-    /* Letter Modal Overlay */
     .letter-modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(5, 2, 8, 0.88);
-      backdrop-filter: blur(12px);
+      background: rgba(5, 2, 8, 0.92);
+      backdrop-filter: blur(14px);
       z-index: 100;
       padding: 20px;
       align-items: center;
@@ -55,7 +60,7 @@
       animation: fadeIn 0.4s ease;
     }
     .letter-card {
-      background: linear-gradient(145deg, #220d30, #14071c);
+      background: linear-gradient(155deg, #270e38, #110419);
       border: 1px solid var(--pink-primary);
       border-radius: 24px;
       width: 100%;
@@ -64,70 +69,77 @@
       overflow-y: auto;
       padding: 28px 22px;
       text-align: left;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255, 77, 148, 0.25);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 77, 148, 0.3);
     }
     .letter-card h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.2rem;
+      font-size: 2.25rem;
       color: var(--pink-glow);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       text-align: center;
     }
     .letter-body {
       font-size: 0.96rem;
-      line-height: 1.65;
-      color: #f7e6f0;
-      margin-bottom: 22px;
+      line-height: 1.68;
+      color: #f8e8f2;
+      margin-bottom: 24px;
       white-space: pre-line;
     }
     .close-letter-btn {
       width: 100%;
       text-align: center;
     }
-    /* Finale Celebration Section */
     .finale-box {
       display: none;
       width: 100%;
+      position: relative;
+      z-index: 5;
       animation: fadeIn 0.6s ease;
     }
     .kiss-counter {
-      font-size: 1.4rem;
+      font-size: 1.45rem;
       font-weight: 700;
       color: var(--gold-accent);
-      margin: 12px 0 6px;
+      margin: 14px 0 8px;
+    }
+    #fireworksCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 4;
+      display: none;
     }
   </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
   <div class="ambient-bg" id="petals"></div>
+  <canvas id="fireworksCanvas"></canvas>
 
   <div class="container" id="mainContainer">
     <span class="page-badge">Grand Finale • 3 Months Together</span>
     <h1>For My Babyy💗 🌷✨</h1>
-    <p class="subtitle">Tap the golden envelope resting on your custom tulip bouquet.</p>
+    <p class="subtitle">A fresh bouquet of pink tulips crafted just for you. Tap the note tucked into the ribbon.</p>
 
-    <div class="bouquet-box">
-      <div id="bouquetCanvas" style="width:100%; height:100%;"></div>
-      <button class="envelope-tag" onclick="openLetter()">💌 Tap to Read Your Letter</button>
+    <div class="bouquet-stage" id="bouquetStage">
+      <canvas id="hdBouquetCanvas"></canvas>
+      <button class="envelope-tag" onclick="openLetter()">💌 For babyy💗 — Tap to Open</button>
     </div>
 
-    <!-- Final Surprise Box (Revealed after reading letter) -->
     <div class="finale-box" id="finaleBox">
-      <div class="glass-box" style="border-color: var(--gold-accent);">
-        <h3 style="color: var(--gold-accent); font-size: 1.3rem; margin-bottom: 8px;">👑 Official 3-Month VIP Pass</h3>
-        <p style="font-size: 0.92rem; color: #ffe3f0; margin-bottom: 14px;">
-          Redeemable anytime for unlimited food, late-night calls, and Affan's undivided attention forever! 🎟️✨
+      <div class="glass-box" style="border-color: var(--gold-accent); background: rgba(24, 9, 34, 0.85);">
+        <div style="font-size: 0.78rem; letter-spacing: 2px; color: var(--pink-glow); margin-bottom: 4px;">VERIFIED ANNIVERSARY GIFT</div>
+        <h3 style="color: var(--gold-accent); font-size: 1.4rem; margin-bottom: 10px;">👑 Official 3-Month VIP Pass</h3>
+        <p style="font-size: 0.94rem; color: #ffe6f2; line-height: 1.55; margin-bottom: 16px;">
+          Redeemable anytime for unlimited food dates, late-night calls, tightest hugs, and Affan's undivided attention forever! 🎟️✨
         </p>
-        <div class="kiss-counter" id="kissDisplay">Kisses sent: 0 💋</div>
-        <button class="btn-glow" onclick="sendKiss()" style="background: linear-gradient(135deg, #ffd166, #ff9f1c); color: #1a0826; font-weight: 700;">
+        <div class="kiss-counter" id="kissDisplay">Kisses sent to Affan: 0 💋</div>
+        <button class="btn-glow" onclick="sendKiss()" style="background: linear-gradient(135deg, #ffd166, #ff9f1c); color: #1a0826; font-weight: 700; margin-top: 6px;">
           Tap to Send Affan a Kiss 💗
         </button>
       </div>
     </div>
   </div>
 
-  <!-- Letter Modal -->
   <div class="letter-modal" id="letterModal">
     <div class="letter-card">
       <h2>To my babyy💗 🌷✨</h2>
@@ -142,99 +154,421 @@ Thank you for all the endless laughs 😂❤️, the late-night calls 🌙📞, 
 I love you way more than words could ever explain, baby 🥹💗♾️.
 
 **Forever yours, Affan 🫂✨🌹💞**</div>
-      <button class="btn-glow close-letter-btn" onclick="closeLetter()">Claim Your Surprise 🎆</button>
+      <button class="btn-glow close-letter-btn" onclick="closeLetter()">Claim Your Final Surprise 🎆</button>
     </div>
   </div>
 
   <script>
+    // Floating background sparkles
     const bg = document.getElementById('petals');
     for (let i = 0; i < 14; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
-      p.textContent = i % 2 === 0 ? '🌷' : '💖';
+      p.textContent = i % 2 === 0 ? '🌷' : '✨';
       p.style.left = Math.random() * 100 + 'vw';
       p.style.animationDuration = (7 + Math.random() * 8) + 's';
       p.style.animationDelay = (Math.random() * 5) + 's';
       bg.appendChild(p);
     }
 
-    // Three.js 3D Bouquet Preview
-    const container = document.getElementById('bouquetCanvas');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 16;
+    // Ultra-HD Retina Canvas Botanical Tulip Bouquet Renderer
+    const canvas = document.getElementById('hdBouquetCanvas');
+    const ctx = canvas.getContext('2d');
+    const dpr = Math.min(window.devicePixelRatio || 2, 3);
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+    function resizeBouquet() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    resizeBouquet();
 
-    scene.add(new THREE.AmbientLight(0xffffff, 1.3));
-    const pLight = new THREE.PointLight(0xff4d94, 2.5, 30);
-    pLight.position.set(0, 5, 8);
-    scene.add(pLight);
+    // Bokeh dust particles around bouquet
+    const bokeh = Array.from({ length: 38 }, () => ({
+      x: Math.random() * 420,
+      y: Math.random() * 380,
+      r: 1 + Math.random() * 2.8,
+      speedY: 0.2 + Math.random() * 0.45,
+      phase: Math.random() * Math.PI * 2,
+      gold: Math.random() > 0.45
+    }));
 
-    // Group of stylized 3D Tulip heads & stems
-    const bouquetGroup = new THREE.Group();
-    
-    for (let i = 0; i < 5; i++) {
-      const stemGeo = new THREE.CylinderGeometry(0.06, 0.06, 7, 8);
-      const stemMat = new THREE.MeshBasicMaterial({ color: 0x4e9f3d });
-      const stem = new THREE.Mesh(stemGeo, stemMat);
-      stem.position.set((i - 2) * 0.5, -2, 0);
-      stem.rotation.z = (i - 2) * -0.08;
-      bouquetGroup.add(stem);
+    // Baby's breath delicate white sprays
+    const babysBreath = [
+      { x: -75, y: -65 }, { x: 78, y: -60 }, { x: -45, y: -115 },
+      { x: 48, y: -112 }, { x: 0, y: -132 }, { x: -95, y: -25 }, { x: 96, y: -28 }
+    ];
 
-      // Tulip Bloom Head
-      const bulbGeo = new THREE.SphereGeometry(0.6, 12, 12);
-      bulbGeo.scale(1, 1.4, 0.8);
-      const bulbMat = new THREE.MeshPhysicalMaterial({ color: 0xff3385, roughness: 0.3, emissive: 0x4d001a });
-      const bulb = new THREE.Mesh(bulbGeo, bulbMat);
-      bulb.position.set((i - 2) * 0.7, 1.8 + Math.abs(i - 2) * 0.2, 0);
-      bouquetGroup.add(bulb);
+    // 11 Lush Layered Tulips (Back row -> Mid row -> Front hero row)
+    const tulips = [
+      // Back row
+      { x: -68, y: -88, angle: -0.34, scale: 0.86, hue: 332 },
+      { x: -24, y: -108, angle: -0.12, scale: 0.92, hue: 338 },
+      { x: 26, y: -106, angle: 0.13, scale: 0.92, hue: 335 },
+      { x: 70, y: -85, angle: 0.35, scale: 0.86, hue: 330 },
+      // Middle row
+      { x: -84, y: -44, angle: -0.44, scale: 0.94, hue: 336 },
+      { x: -42, y: -68, angle: -0.20, scale: 1.02, hue: 342 },
+      { x: 2, y: -76, angle: 0.02, scale: 1.06, hue: 340 },
+      { x: 44, y: -66, angle: 0.22, scale: 1.02, hue: 337 },
+      { x: 85, y: -42, angle: 0.45, scale: 0.94, hue: 334 },
+      // Front Hero Tulips
+      { x: -28, y: -26, angle: -0.14, scale: 1.08, hue: 344 },
+      { x: 28, y: -24, angle: 0.15, scale: 1.08, hue: 341 }
+    ];
+
+    function drawLeaf(cx, cy, angle, length, width, dark) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(angle);
+      const grad = ctx.createLinearGradient(0, 0, 0, -length);
+      grad.addColorStop(0, dark ? '#0b2b18' : '#134226');
+      grad.addColorStop(0.6, dark ? '#185231' : '#257547');
+      grad.addColorStop(1, '#43a86b');
+
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(-width, -length * 0.35, -width * 0.8, -length * 0.8, 0, -length);
+      ctx.bezierCurveTo(width * 0.8, -length * 0.8, width, -length * 0.35, 0, 0);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Subtle leaf vein highlight
+      ctx.strokeStyle = 'rgba(145, 235, 175, 0.25)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, -4);
+      ctx.quadraticCurveTo(2, -length * 0.5, 0, -length * 0.92);
+      ctx.stroke();
+      ctx.restore();
     }
 
-    scene.add(bouquetGroup);
+    function drawRealisticTulip(t, sway) {
+      ctx.save();
+      const bx = t.x + sway * (t.y * -0.04);
+      const by = t.y;
 
-    function animateBouquet() {
-      requestAnimationFrame(animateBouquet);
-      bouquetGroup.rotation.y = Math.sin(Date.now() * 0.0015) * 0.25;
-      renderer.render(scene, camera);
+      // Stem curving gracefully down to the ribbon tie point (0, 65)
+      const stemGrad = ctx.createLinearGradient(bx, by, 0, 65);
+      stemGrad.addColorStop(0, '#368f58');
+      stemGrad.addColorStop(1, '#123821');
+      ctx.strokeStyle = stemGrad;
+      ctx.lineWidth = 4.2 * t.scale;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(bx, by + 10);
+      ctx.quadraticCurveTo(bx * 0.65, (by + 65) * 0.5, 0, 68);
+      ctx.stroke();
+
+      // Tulip Flower Head
+      ctx.translate(bx, by);
+      ctx.rotate(t.angle + sway * 0.04);
+      ctx.scale(t.scale, t.scale);
+
+      // Soft ambient glow behind flower head
+      const glow = ctx.createRadialGradient(0, -12, 2, 0, -12, 34);
+      glow.addColorStop(0, `hsla(${t.hue}, 100%, 70%, 0.32)`);
+      glow.addColorStop(1, 'rgba(255, 77, 148, 0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(0, -12, 34, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Back center inner petal
+      const innerGrad = ctx.createLinearGradient(0, 12, 0, -34);
+      innerGrad.addColorStop(0, `hsl(${t.hue - 8}, 85%, 32%)`);
+      innerGrad.addColorStop(0.6, `hsl(${t.hue}, 92%, 58%)`);
+      innerGrad.addColorStop(1, `hsl(${t.hue + 6}, 100%, 84%)`);
+      ctx.fillStyle = innerGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, 12);
+      ctx.bezierCurveTo(-15, 6, -14, -24, 0, -35);
+      ctx.bezierCurveTo(14, -24, 15, 6, 0, 12);
+      ctx.fill();
+
+      // Left cupped velvet petal
+      const leftGrad = ctx.createLinearGradient(-18, 10, 4, -30);
+      leftGrad.addColorStop(0, `hsl(${t.hue - 10}, 88%, 28%)`);
+      leftGrad.addColorStop(0.55, `hsl(${t.hue}, 95%, 54%)`);
+      leftGrad.addColorStop(1, `hsl(${t.hue + 8}, 100%, 82%)`);
+      ctx.fillStyle = leftGrad;
+      ctx.beginPath();
+      ctx.moveTo(-2, 13);
+      ctx.bezierCurveTo(-22, 8, -24, -18, -7, -32);
+      ctx.bezierCurveTo(-1, -22, 3, -4, -2, 13);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 225, 240, 0.45)';
+      ctx.lineWidth = 0.9;
+      ctx.stroke();
+
+      // Right cupped velvet petal
+      const rightGrad = ctx.createLinearGradient(18, 10, -4, -30);
+      rightGrad.addColorStop(0, `hsl(${t.hue - 10}, 88%, 26%)`);
+      rightGrad.addColorStop(0.55, `hsl(${t.hue - 2}, 94%, 50%)`);
+      rightGrad.addColorStop(1, `hsl(${t.hue + 8}, 100%, 80%)`);
+      ctx.fillStyle = rightGrad;
+      ctx.beginPath();
+      ctx.moveTo(2, 13);
+      ctx.bezierCurveTo(22, 8, 24, -18, 7, -32);
+      ctx.bezierCurveTo(1, -22, -3, -4, 2, 13);
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 225, 240, 0.35)';
+      ctx.lineWidth = 0.9;
+      ctx.stroke();
+
+      ctx.restore();
     }
-    animateBouquet();
 
-    // Letter Handlers
+    function drawBabysBreath(b, sway) {
+      ctx.save();
+      const bx = b.x + sway * 3;
+      const by = b.y;
+      ctx.strokeStyle = 'rgba(110, 195, 140, 0.45)';
+      ctx.lineWidth = 1.2;
+      ctx.beginPath();
+      ctx.moveTo(bx, by);
+      ctx.quadraticCurveTo(bx * 0.5, 10, 0, 65);
+      ctx.stroke();
+
+      const offsets = [[0, 0], [-8, -6], [8, -5], [-5, 7], [7, 6]];
+      offsets.forEach(([ox, oy]) => {
+        ctx.fillStyle = 'rgba(255, 250, 253, 0.9)';
+        ctx.shadowColor = '#ffd6e8';
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.arc(bx + ox, by + oy, 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      ctx.restore();
+    }
+
+    function drawLuxuryWrap() {
+      ctx.save();
+      // Back dark luxury paper cone
+      const backPaper = ctx.createLinearGradient(0, -90, 0, 130);
+      backPaper.addColorStop(0, '#2a1236');
+      backPaper.addColorStop(1, '#0e0514');
+      ctx.fillStyle = backPaper;
+      ctx.beginPath();
+      ctx.moveTo(-115, -45);
+      ctx.lineTo(0, -125);
+      ctx.lineTo(115, -45);
+      ctx.lineTo(28, 135);
+      ctx.lineTo(-28, 135);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 209, 102, 0.4)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+
+      // Front folded matte-plum & gold-trimmed wrap
+      const frontLeft = ctx.createLinearGradient(-85, -10, 10, 130);
+      frontLeft.addColorStop(0, '#1f0b29');
+      frontLeft.addColorStop(1, '#09030d');
+      ctx.fillStyle = frontLeft;
+      ctx.beginPath();
+      ctx.moveTo(-98, -15);
+      ctx.lineTo(18, 65);
+      ctx.lineTo(-26, 138);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 209, 102, 0.55)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      const frontRight = ctx.createLinearGradient(85, -10, -10, 130);
+      frontRight.addColorStop(0, '#2d113b');
+      frontRight.addColorStop(1, '#0c0412');
+      ctx.fillStyle = frontRight;
+      ctx.beginPath();
+      ctx.moveTo(98, -15);
+      ctx.lineTo(-18, 65);
+      ctx.lineTo(26, 138);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 209, 102, 0.55)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      // Metallic Satin Gold Ribbon Bow at waist (0, 66)
+      const goldGrad = ctx.createLinearGradient(-30, 55, 30, 78);
+      goldGrad.addColorStop(0, '#d99b26');
+      goldGrad.addColorStop(0.5, '#ffe28a');
+      goldGrad.addColorStop(1, '#c98512');
+      ctx.fillStyle = goldGrad;
+
+      // Left & right ribbon loops
+      ctx.beginPath();
+      ctx.ellipse(-18, 64, 18, 8, -0.25, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(18, 64, 18, 8, 0.25, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Ribbon tails
+      ctx.beginPath();
+      ctx.moveTo(-4, 68);
+      ctx.lineTo(-22, 105);
+      ctx.lineTo(-13, 102);
+      ctx.lineTo(0, 72);
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.moveTo(4, 68);
+      ctx.lineTo(22, 105);
+      ctx.lineTo(13, 102);
+      ctx.lineTo(0, 72);
+      ctx.fill();
+
+      // Center knot
+      ctx.beginPath();
+      ctx.roundRect(-7, 59, 14, 13, 4);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function renderBouquet(time) {
+      const w = canvas.width / dpr;
+      const h = canvas.height / dpr;
+      ctx.clearRect(0, 0, w, h);
+
+      const sway = Math.sin(time * 0.0018) * 1.2;
+
+      ctx.save();
+      ctx.translate(w / 2, h * 0.52);
+
+      // 1. Back luxury paper cone
+      const backPaper = ctx.createLinearGradient(0, -130, 0, 120);
+      backPaper.addColorStop(0, '#2a1236');
+      backPaper.addColorStop(1, '#0d0412');
+      ctx.fillStyle = backPaper;
+      ctx.beginPath();
+      ctx.moveTo(-112, -45);
+      ctx.lineTo(0, -135);
+      ctx.lineTo(112, -45);
+      ctx.lineTo(28, 135);
+      ctx.lineTo(-28, 135);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 209, 102, 0.45)';
+      ctx.lineWidth = 1.4;
+      ctx.stroke();
+
+      // 2. Baby's breath delicate sprays
+      babysBreath.forEach(b => drawBabysBreath(b, sway));
+
+      // 3. Rich Botanical Tulip Leaves
+      drawLeaf(-18, 55, -0.58 + sway * 0.02, 135, 22, true);
+      drawLeaf(18, 55, 0.58 + sway * 0.02, 135, 22, true);
+      drawLeaf(-10, 50, -0.28 + sway * 0.02, 145, 20, false);
+      drawLeaf(10, 50, 0.28 + sway * 0.02, 145, 20, false);
+
+      // 4. All 11 Layered Velvet Tulips
+      tulips.forEach(t => drawRealisticTulip(t, sway));
+
+      // 5. Front folded wrap & satin gold bow
+      drawLuxuryWrap();
+
+      ctx.restore();
+
+      // 6. Floating Golden & Rose Bokeh Dust
+      bokeh.forEach(p => {
+        p.y -= p.speedY;
+        if (p.y < 0) p.y = h;
+        const alpha = 0.35 + 0.45 * Math.sin(time * 0.003 + p.phase);
+        ctx.fillStyle = p.gold
+          ? `rgba(255, 215, 115, ${alpha})`
+          : `rgba(255, 133, 185, ${alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x % w, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      requestAnimationFrame(renderBouquet);
+    }
+    requestAnimationFrame(renderBouquet);
+
+    // Letter Modal Handlers
     function openLetter() {
       document.getElementById('letterModal').style.display = 'flex';
     }
 
     function closeLetter() {
       document.getElementById('letterModal').style.display = 'none';
-      document.querySelector('.bouquet-box').style.display = 'none';
+      document.getElementById('bouquetStage').style.display = 'none';
       document.getElementById('finaleBox').style.display = 'block';
+      startFireworks();
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Real-time Pink & Gold Celebration Fireworks
+    function startFireworks() {
+      const fwCanvas = document.getElementById('fireworksCanvas');
+      fwCanvas.style.display = 'block';
+      const fCtx = fwCanvas.getContext('2d');
+      fwCanvas.width = window.innerWidth;
+      fwCanvas.height = window.innerHeight;
+
+      let sparks = [];
+      const colors = ['#ff4d94', '#ffd166', '#ff85b3', '#ffffff', '#ff1a75'];
+
+      function createBurst() {
+        const cx = Math.random() * fwCanvas.width * 0.8 + fwCanvas.width * 0.1;
+        const cy = Math.random() * fwCanvas.height * 0.45 + 60;
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        for (let i = 0; i < 42; i++) {
+          const angle = (Math.PI * 2 * i) / 42;
+          const speed = 1.5 + Math.random() * 3.5;
+          sparks.push({
+            x: cx, y: cy,
+            vx: Math.cos(angle) * speed,
+            vy: Math.sin(angle) * speed,
+            alpha: 1,
+            color
+          });
+        }
+      }
+
+      createBurst();
+      setInterval(createBurst, 1100);
+
+      function animateFW() {
+        fCtx.clearRect(0, 0, fwCanvas.width, fwCanvas.height);
+        sparks.forEach((s, idx) => {
+          s.x += s.vx;
+          s.y += s.vy;
+          s.vy += 0.04;
+          s.alpha -= 0.015;
+          fCtx.fillStyle = s.color;
+          fCtx.globalAlpha = Math.max(0, s.alpha);
+          fCtx.beginPath();
+          fCtx.arc(s.x, s.y, 2.4, 0, Math.PI * 2);
+          fCtx.fill();
+          if (s.alpha <= 0) sparks.splice(idx, 1);
+        });
+        fCtx.globalAlpha = 1;
+        requestAnimationFrame(animateFW);
+      }
+      animateFW();
     }
 
     // Kiss Counter
     let kisses = 0;
     function sendKiss() {
       kisses++;
-      document.getElementById('kissDisplay').textContent = `Kisses sent: ${kisses} 💋💗`;
-      // Create floating heart effect
+      document.getElementById('kissDisplay').textContent = `Kisses sent to Affan: ${kisses} 💋💗`;
       const h = document.createElement('div');
-      h.textContent = '💋';
+      h.textContent = kisses % 5 === 0 ? '💖' : '💋';
       h.style.position = 'fixed';
-      h.style.left = (Math.random() * 80 + 10) + 'vw';
-      h.style.top = '70vh';
-      h.style.fontSize = '2rem';
+      h.style.left = (Math.random() * 75 + 12) + 'vw';
+      h.style.top = '68vh';
+      h.style.fontSize = '2.2rem';
       h.style.transition = 'all 1s ease-out';
       h.style.zIndex = '999';
       document.body.appendChild(h);
       setTimeout(() => {
-        h.style.transform = 'translateY(-120px) scale(1.4)';
+        h.style.transform = 'translateY(-150px) scale(1.5)';
         h.style.opacity = '0';
-      }, 50);
-      setTimeout(() => h.remove(), 1050);
-    }
-  </script>
-</body>
-</html>
+      }, 
