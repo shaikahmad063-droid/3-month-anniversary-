@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Months With You 💗 | Step 2</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .grid-4 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      width: 100%;
+      margin-bottom: 18px;
+    }
+    .pillar-card {
+      background: rgba(32, 14, 42, 0.75);
+      border: 1px solid rgba(255, 133, 179, 0.28);
+      border-radius: 18px;
+      padding: 20px 12px;
+      min-height: 155px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: transform 0.25s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .pillar-card:active {
+      transform: scale(0.96);
+    }
+    .pillar-card.unlocked {
+      border-color: var(--pink-primary);
+      background: linear-gradient(145deg, rgba(255, 77, 148, 0.18), rgba(26, 12, 34, 0.85));
+      box-shadow: 0 0 20px rgba(255, 77, 148, 0.25);
+      cursor: default;
+    }
+    .card-emoji {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .card-tap {
+      font-size: 0.76rem;
+      color: var(--pink-glow);
+      margin-top: 6px;
+    }
+    .card-reveal {
+      font-size: 0.85rem;
+      color: #ffe3f0;
+      line-height: 1.4;
+      margin-top: 6px;
+      animation: fadeIn 0.4s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .perfect-banner {
+      display: none;
+      width: 100%;
+      padding: 16px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(255, 77, 148, 0.25), rgba(255, 209, 102, 0.15));
+      border: 1px solid var(--gold-accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      animation: fadeIn 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg" id="petals"></div>
+
+  <div class="container">
+    <span class="page-badge">Chapter 02 • World Records</span>
+    <h1>Scientific Fact Check 🔬💗</h1>
+    <p class="subtitle">Tap each box below to see who holds the world record.</p>
+
+    <div class="grid-4">
+      <div class="pillar-card" id="card-0" onclick="revealCard(0)">
+        <div class="card-emoji">😊</div>
+        <div class="card-title">World's Cutest Smile</div>
+        <div class="card-tap">Tap to check ✨</div>
+      </div>
+
+      <div class="pillar-card" id="card-1" onclick="revealCard(1)">
+        <div class="card-emoji">👀</div>
+        <div class="card-title">Most Mesmerizing Eyes</div>
+        <div class="card-tap">Tap to check ✨</div>
+      </div>
+
+      <div class="pillar-card" id="card-2" onclick="revealCard(2)">
+        <div class="card-emoji">🎧</div>
+        <div class="card-title">Sweetest Voice Ever</div>
+        <div class="card-tap">Tap to check ✨</div>
+      </div>
+
+      <div class="pillar-card" id="card-3" onclick="revealCard(3)">
+        <div class="card-emoji">💇‍♀️</div>
+        <div class="card-title">Prettiest Hair</div>
+        <div class="card-tap">Tap to check ✨</div>
+      </div>
+    </div>
+
+    <div class="perfect-banner" id="perfectBanner">
+      👑 Final Result: 4/4 Unlocked — Nida is literally the Perfect Girl! 🥹💖
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="page3.html" class="btn-glow next-btn" id="nextBtn">Next Page →</a>
+  </div>
+
+  <script>
+    const bg = document.getElementById('petals');
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = i % 2 === 0 ? '🌷' : '💗';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (7 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      bg.appendChild(p);
+    }
+
+    const data = [
+      { emoji: "🏆", title: "Nida's Smile 😊", desc: "Obviously babyy💗! Fixes my mood in 0.1 seconds." },
+      { emoji: "✨", title: "Nida's Eyes 🥺", desc: "Could get lost looking into them forever." },
+      { emoji: "🎶", title: "Nida's Voice 📞", desc: "My favorite sound in the entire universe." },
+      { emoji: "🌷", title: "Nida's Hair 👑", desc: "10/10 perfection, zero competition." }
+    ];
+
+    const state = [false, false, false, false];
+    const loading = [false, false, false, false];
+
+    function revealCard(idx) {
+      if (state[idx] || loading[idx]) return;
+      loading[idx] = true;
+
+      const card = document.getElementById('card-' + idx);
+      card.innerHTML = `<div class="spinner"></div><div class="card-tap">Verifying...</div>`;
+
+      setTimeout(() => {
+        state[idx] = true;
+        card.classList.add('unlocked');
+        card.innerHTML = `
+          <div class="card-emoji">${data[idx].emoji}</div>
+          <div class="card-title">${data[idx].title}</div>
+          <div class="card-reveal">${data[idx].desc}</div>
+        `;
+
+        if (state.every(Boolean)) {
+          document.getElementById('perfectBanner').style.display = 'block';
+          document.getElementById('nextBtn').classList.add('visible');
+        }
+      }, 1100);
+    }
+  </script>
+</body>
+  </html>
+  
