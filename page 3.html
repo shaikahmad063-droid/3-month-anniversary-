@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Months With You 💗 | Step 3</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .canvas-box {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 420px;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10, 4, 15, 0.6);
+      border: 1px solid rgba(255, 133, 179, 0.2);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 0 35px rgba(255, 77, 148, 0.15);
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-bg" id="petals"></div>
+
+  <div class="container">
+    <span class="page-badge">Chapter 03 • Infinite Code</span>
+    <h1>"I Love You" in Every Language 🌍💞</h1>
+    <p class="subtitle">Built with pure math and endless love, just for my babyy💗.</p>
+
+    <div class="canvas-box">
+      <canvas id="heartCanvas" width="400" height="400"></canvas>
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <a href="page4.html" class="btn-glow next-btn" id="nextBtn">Next Page →</a>
+  </div>
+
+  <script>
+    const bg = document.getElementById('petals');
+    for (let i = 0; i < 12; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.textContent = i % 2 === 0 ? '🌷' : '💖';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDuration = (7 + Math.random() * 8) + 's';
+      p.style.animationDelay = (Math.random() * 5) + 's';
+      bg.appendChild(p);
+    }
+
+    // JavaScript port of your Python heart algorithm
+    const canvas = document.getElementById('heartCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const PHRASES = [
+      "I love you", "Seni seviyorum", "Te amo", "Je t'aime",
+      "Ich liebe dich", "Ti amo", "Eu te amo", "Я тебя люблю",
+      "사랑해", "愛してる", "我爱你", "मैं तुमसे प्यार करता हूँ",
+      "Σ' αγαπώ", "Ik hou van jou", "Jag älskar dig", "Kocham cię",
+      "ฉันรักเธอ", "Anh yêu em", "Aku cinta kamu", "Я тебе кохаю"
+    ];
+
+    const SC = 11;
+    const OY = -10;
+    const SIZES = [9, 10, 11, 12];
+    const BG_COLOR = "#060208";
+
+    // Generate heart polygon
+    const poly = [];
+    for (let i = 0; i < 720; i++) {
+      const a = (2 * Math.PI * i) / 720;
+      const x = 16 * Math.pow(Math.sin(a), 3);
+      const y = 13 * Math.cos(a) - 5 * Math.cos(2 * a) - 2 * Math.cos(3 * a) - Math.cos(4 * a);
+      poly.push({ x: x * SC + 200, y: -(y * SC + OY) + 200 });
+    }
+
+    const yMax = Math.min(...poly.map(p => p.y));
+    const yMin = Math.max(...poly.map(p => p.y));
+    const cy = (yMax + yMin) / 2;
+
+    function getSpans(targetY) {
+      const xs = [];
+      for (let i = 0; i < poly.length; i++) {
+        const p1 = poly[i];
+        const p2 = poly[(i + 1) % poly.length];
+        if ((p1.y <= targetY && targetY < p2.y) || (p2.y <= targetY && targetY < p1.y)) {
+          if (p2.y !== p1.y) {
+            xs.push(p1.x + (targetY - p1.y) * (p2.x - p1.x) / (p2.y - p1.y));
+          }
+        }
+      }
+      xs.sort((a, b) => a - b);
+      const spans = [];
+      for (let i = 0; i < xs.length; i += 2) {
+        if (xs[i + 1] !== undefined) spans.push([xs[i], xs[i + 1]]);
+      }
+      return spans;
+    }
+
+    function intersect(A, B) {
+      const out = [];
+      for (let a of A) {
+        for (let b of B) {
+          const lo = Math.max(a[0], b[0]);
+          const hi = Math.min(a[1], b[1]);
+          if (hi - lo > 14) out.push([lo, hi]);
+        }
+      }
+      return out;
+    }
+
+    // Build words layout
+    let placedWords = [];
+    let phraseIdx = 0;
+    const rowH = 18;
+    let y = yMax + 10;
+
+    ctx.font = 'bold 10px Outfit';
+
+    while (y < yMin - 10) {
+      const row = intersect(getSpans(y - 8), getSpans(y + 8));
+      for (let [lo, hi] of row) {
+        lo += 4; hi -= 4;
+        let cur = lo + Math.random() * 8;
+        while (cur < hi - 20) {
+          const text = PHRASES[phraseIdx % PHRASES.length];
+          phraseIdx++;
+          const size = SIZES[Math.floor(Math.random() * SIZES.length)];
+          ctx.font = `bold ${size}px Outfit`;
+          const w = ctx.measureText(text).width;
+          if (cur + w <= hi) {
+            const edge = cur <= lo + 15 || cur + w >= hi - 15;
+            const distFromCenter = Math.hypot((cur + w/2 - 200) / (16 * SC), (y - cy) / (14.5 * SC));
+            const rad = Math.min(1.0, Math.abs(distFromCenter));
+            
+            // Wine to crimson & glowing pink color mix
+            const r = Math.floor((0.58 + rad * 0.4) * 255);
+            const g = Math.floor((0.05 + rad * 0.1) * 255);
+            const b = Math.floor((0.12 + rad * 0.2) * 255);
+            const color = `rgb(${r},${g},${b})`;
+
+            placedWords.push({ text, x: cur + w/2, y, size, color, edge, alpha: 0 });
+            cur += w + 7;
+          } else {
+            break;
+          }
+        }
+      }
+      y += rowH;
+    }
+
+    // Animation & Spawning state
+    let spawnIndex = 0;
+    const activeWords = [];
+
+    function animateHeart() {
+      ctx.fillStyle = BG_COLOR;
+      ctx.fillRect(0, 0, 400, 400);
+
+      // Spawn in chunks
+      if (spawnIndex < placedWords.length) {
+        for (let k = 0; k < 3 && spawnIndex < placedWords.length; k++) {
+          activeWords.push(placedWords[spawnIndex]);
+          spawnIndex++;
+        }
+      }
+
+      for (let p of activeWords) {
+        if (p.alpha < 1) p.alpha += 0.04;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.font = `bold ${p.size}px Outfit`;
+        ctx.fillStyle = p.color;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(p.text, p.x, p.y);
+        ctx.restore();
+      }
+
+      // Unlock next button once the heart is fully formed
+      if (spawnIndex >= placedWords.length) {
+        document.getElementById('nextBtn').classList.add('visible');
+      }
+
+      requestAnimationFrame(animateHeart);
+    }
+
+    // Start animation loop after 300ms
+    setTimeout(animateHeart, 300);
+  </script>
+</body>
+</html>
