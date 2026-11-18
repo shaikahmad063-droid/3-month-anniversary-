@@ -6,45 +6,65 @@
   <title>3 Months With You 💗 | Step 4</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    .canvas-container {
-      position: relative;
+    .counter-card {
+      background: rgba(26, 12, 34, 0.75);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 133, 179, 0.3);
+      border-radius: 24px;
+      padding: 30px 20px;
       width: 100%;
       max-width: 420px;
-      height: 380px;
-      margin: 0 auto 14px;
-      border-radius: 22px;
-      overflow: hidden;
-      background: radial-gradient(circle, rgba(27, 8, 38, 0.85) 0%, rgba(7, 3, 10, 0.95) 100%);
-      border: 1px solid rgba(255, 133, 179, 0.25);
-      box-shadow: 0 0 35px rgba(255, 77, 148, 0.2);
+      margin: 20px auto;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 77, 148, 0.2);
+      text-align: center;
     }
-    #threeCanvas {
-      width: 100%;
-      height: 100%;
-      display: block;
+    .love-percentage {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--gold-accent);
+      margin: 14px 0;
+      text-shadow: 0 0 20px rgba(255, 209, 102, 0.4);
+      font-family: 'Outfit', sans-serif;
     }
-    .hint-text {
-      font-size: 0.85rem;
+    .love-status {
+      font-size: 0.95rem;
       color: var(--pink-glow);
-      margin-bottom: 12px;
+      margin-bottom: 20px;
+      min-height: 28px;
+    }
+    .btn-panic {
+      background: rgba(255, 77, 148, 0.18);
+      border: 1px solid var(--pink-primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.2s ease;
+    }
+    .btn-panic:active {
+      transform: scale(0.95);
+      background: rgba(255, 77, 148, 0.35);
     }
   </style>
-  <!-- Three.js CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 <body>
   <div class="ambient-bg" id="petals"></div>
 
   <div class="container">
-    <span class="page-badge">Chapter 04 • 3D Universe</span>
-    <h1>My Universe Rehearse 🌌💗</h1>
-    <p class="subtitle">Drag to rotate the 3D heart, and tap anywhere to trigger love shocks!</p>
+    <span class="page-badge">Chapter 04 • System Overload</span>
+    <h1>Affan's Love Calculator 🧮💗</h1>
+    <p class="subtitle">Warning: This system is built to calculate how much I love you, but it refuses to stop.</p>
 
-    <div class="canvas-container" id="canvasBox">
-      <canvas id="threeCanvas"></canvas>
+    <div class="counter-card">
+      <div style="font-size: 0.85rem; letter-spacing: 1.5px; color: #fff5f9; text-transform: uppercase;">Current Love Level</div>
+      <div class="love-percentage" id="loveCounter">100.0%</div>
+      <div class="love-status" id="loveStatus">Normal levels detected... wait, it's still climbing! 📈</div>
+      
+      <button class="btn-panic" onclick="boostLove()">🛑 Try to Stop / Pause</button>
     </div>
-
-    <div class="hint-text" id="hint">✨ Tap the 3D heart or screen for surprises!</div>
   </div>
 
   <div class="nav-footer">
@@ -56,130 +76,72 @@
     for (let i = 0; i < 12; i++) {
       const p = document.createElement('div');
       p.className = 'petal';
-      p.textContent = i % 2 === 0 ? '🌷' : '✨';
+      p.textContent = i % 2 === 0 ? '🌷' : '💖';
       p.style.left = Math.random() * 100 + 'vw';
       p.style.animationDuration = (7 + Math.random() * 8) + 's';
       p.style.animationDelay = (Math.random() * 5) + 's';
       bg.appendChild(p);
     }
 
-    // Three.js Scene Setup
-    const container = document.getElementById('canvasBox');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(60, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 28;
+    let loveValue = 100.0;
+    let speed = 4.5;
+    const counterEl = document.getElementById('loveCounter');
+    const statusEl = document.getElementById('loveStatus');
+    const nextBtn = document.getElementById('nextBtn');
 
-    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threeCanvas'), antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-    scene.add(ambientLight);
-
-    const pointLight = new THREE.PointLight(0xff4d94, 3, 50);
-    pointLight.position.set(5, 5, 10);
-    scene.add(pointLight);
-
-    // Create 3D Heart Shape using ExtrudeGeometry
-    const x = 0, y = 0;
-    const heartShape = new THREE.Shape();
-    heartShape.moveTo(x + 5, y + 5);
-    heartShape.bezierCurveTo(x + 5, y + 5, x + 4, y, x, y);
-    heartShape.bezierCurveTo(x - 6, y, x - 6, y + 7, x - 6, y + 7);
-    heartShape.bezierCurveTo(x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19);
-    heartShape.bezierCurveTo(x + 13, y + 15.4, x + 16, y + 11, x + 16, y + 7);
-    heartShape.bezierCurveTo(x + 16, y + 7, x + 16, y, x + 10, y);
-    heartShape.bezierCurveTo(x + 7, y, x + 5, y + 5, x + 5, y + 5);
-
-    const extrudeSettings = { depth: 3, bevelEnabled: true, bevelSegments: 5, steps: 2, bevelSize: 1, bevelThickness: 1 };
-    const geometry = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
-    geometry.center();
-
-    const material = new THREE.MeshPhysicalMaterial({
-      color: 0xff3385,
-      emissive: 0x990033,
-      roughness: 0.2,
-      metalness: 0.3,
-      clearcoat: 1.0,
-      clearcoatRoughness: 0.1,
-      transparent: true,
-      opacity: 0.92
-    });
-
-    const heartMesh = new THREE.Mesh(geometry, material);
-    heartMesh.scale.set(0.65, 0.65, 0.65);
-    scene.add(heartMesh);
-
-    // Floating Star / Particle Galaxy around heart
-    const particlesCount = 250;
-    const posArray = new Float32Array(particlesCount * 3);
-    for(let i = 0; i < particlesCount * 3; i++) {
-      posArray[i] = (Math.random() - 0.5) * 45;
-    }
-    const particlesGeo = new THREE.BufferGeometry();
-    particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    const particlesMat = new THREE.PointsMaterial({ size: 0.25, color: 0xffa3c2, transparent: true, opacity: 0.7 });
-    const particlesMesh = new THREE.Points(particlesGeo, particlesMat);
-    scene.add(particlesMesh);
-
-    // Interaction / Drag to rotate
-    let isDragging = false;
-    let prevMouseX = 0, prevMouseY = 0;
-    let tapCount = 0;
-
-    container.addEventListener('pointerdown', (e) => {
-      isDragging = true;
-      prevMouseX = e.clientX;
-      prevMouseY = e.clientY;
-      triggerTapEffect();
-    });
-
-    window.addEventListener('pointermove', (e) => {
-      if (!isDragging) return;
-      const deltaX = e.clientX - prevMouseX;
-      const deltaY = e.clientY - prevMouseY;
-      heartMesh.rotation.y += deltaX * 0.008;
-      heartMesh.rotation.x += deltaY * 0.008;
-      prevMouseX = e.clientX;
-      prevMouseY = e.clientY;
-    });
-
-    window.addEventListener('pointerup', () => { isDragging = false; });
-
-    const messages = [
-      "3 Months of Us 🥹", "My Best Friend 🤍", "My Favorite Person 🌷", 
-      "Infinite Love ♾️", "Babyy💗 ✨", "Forever & Always 💍"
+    const statuses = [
+      { at: 150, text: "Wait... why is the meter bypassing normal limits? 😳" },
+      { at: 300, text: "Error 404: Maximum limit not found! 🚀" },
+      { at: 500, text: "System Warning: Love for Nida has reached infinity! 🔥" },
+      { at: 800, text: "Servers are melting because of how pretty you are 🫠💗" },
+      { at: 1200, text: "Okay, it's officially unstoppable now. Deal with it 😎💞" }
     ];
 
-    function triggerTapEffect() {
-      tapCount++;
-      // Quick scale pulse
-      heartMesh.scale.set(0.78, 0.78, 0.78);
-      setTimeout(() => heartMesh.scale.set(0.65, 0.65, 0.65), 200);
+    function updateCounter() {
+      loveValue += speed;
+      counterEl.textContent = loveValue.toFixed(1) + '%';
 
-      if (tapCount >= 3) {
-        document.getElementById('hint').textContent = "🔓 Universe fully synchronized!";
-        document.getElementById('nextBtn').classList.add('visible');
+      // Check statuses
+      for (let s of statuses) {
+        if (loveValue >= s.at && loveValue < s.at + speed * 10) {
+          statusEl.textContent = s.text;
+        }
       }
+
+      // Unlock next page automatically once it passes 500%
+      if (loveValue >= 500 && !nextBtn.classList.contains('visible')) {
+        nextBtn.classList.add('visible');
+      }
+
+      requestAnimationFrame(() => {
+        setTimeout(updateCounter, 50);
+      });
     }
 
-    // Auto unlock fallback after 5s just in case
-    setTimeout(() => {
-      document.getElementById('nextBtn').classList.add('visible');
-    }, 5000);
-
-    // Animation Loop
-    function animate() {
-      requestAnimationFrame(animate);
-      if (!isDragging) {
-        heartMesh.rotation.y += 0.012;
-        heartMesh.rotation.z = Math.sin(Date.now() * 0.002) * 0.08;
-      }
-      particlesMesh.rotation.y -= 0.002;
-      renderer.render(scene, camera);
+    function boostLove() {
+      speed += 12.0;
+      statusEl.textContent = "⚠️ ERROR: Trying to stop it only made Affan love you MORE! 💥😂";
+      
+      // Floating hearts effect on click
+      const h = document.createElement('div');
+      h.textContent = '💗';
+      h.style.position = 'fixed';
+      h.style.left = (Math.random() * 60 + 20) + 'vw';
+      h.style.top = '50vh';
+      h.style.fontSize = '2rem';
+      h.style.transition = 'all 0.8s ease-out';
+      h.style.zIndex = '999';
+      document.body.appendChild(h);
+      setTimeout(() => {
+        h.style.transform = 'translateY(-100px) scale(1.5)';
+        h.style.opacity = '0';
+      }, 50);
+      setTimeout(() => h.remove(), 850);
     }
-    animate();
+
+    // Start counter loop
+    setTimeout(updateCounter, 600);
   </script>
 </body>
-</html>
+                                                                                                                             </html>
+  
