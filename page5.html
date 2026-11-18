@@ -22,6 +22,8 @@
       justify-content: center;
     }
     #hdBouquetCanvas {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       display: block;
@@ -159,7 +161,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
   </div>
 
   <script>
-    // Floating background sparkles
     const bg = document.getElementById('petals');
     for (let i = 0; i < 14; i++) {
       const p = document.createElement('div');
@@ -171,20 +172,21 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       bg.appendChild(p);
     }
 
-    // Ultra-HD Retina Canvas Botanical Tulip Bouquet Renderer
     const canvas = document.getElementById('hdBouquetCanvas');
     const ctx = canvas.getContext('2d');
-    const dpr = Math.min(window.devicePixelRatio || 2, 3);
+    const dpr = window.devicePixelRatio || 2;
 
     function resizeBouquet() {
-      const rect = canvas.parentElement.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
+      const parent = canvas.parentElement;
+      const width = parent.clientWidth;
+      const height = parent.clientHeight;
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
       ctx.scale(dpr, dpr);
     }
     resizeBouquet();
+    window.addEventListener('resize', resizeBouquet);
 
-    // Bokeh dust particles around bouquet
     const bokeh = Array.from({ length: 38 }, () => ({
       x: Math.random() * 420,
       y: Math.random() * 380,
@@ -194,26 +196,21 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       gold: Math.random() > 0.45
     }));
 
-    // Baby's breath delicate white sprays
     const babysBreath = [
       { x: -75, y: -65 }, { x: 78, y: -60 }, { x: -45, y: -115 },
       { x: 48, y: -112 }, { x: 0, y: -132 }, { x: -95, y: -25 }, { x: 96, y: -28 }
     ];
 
-    // 11 Lush Layered Tulips (Back row -> Mid row -> Front hero row)
     const tulips = [
-      // Back row
       { x: -68, y: -88, angle: -0.34, scale: 0.86, hue: 332 },
       { x: -24, y: -108, angle: -0.12, scale: 0.92, hue: 338 },
       { x: 26, y: -106, angle: 0.13, scale: 0.92, hue: 335 },
       { x: 70, y: -85, angle: 0.35, scale: 0.86, hue: 330 },
-      // Middle row
       { x: -84, y: -44, angle: -0.44, scale: 0.94, hue: 336 },
       { x: -42, y: -68, angle: -0.20, scale: 1.02, hue: 342 },
       { x: 2, y: -76, angle: 0.02, scale: 1.06, hue: 340 },
       { x: 44, y: -66, angle: 0.22, scale: 1.02, hue: 337 },
       { x: 85, y: -42, angle: 0.45, scale: 0.94, hue: 334 },
-      // Front Hero Tulips
       { x: -28, y: -26, angle: -0.14, scale: 1.08, hue: 344 },
       { x: 28, y: -24, angle: 0.15, scale: 1.08, hue: 341 }
     ];
@@ -234,7 +231,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.fillStyle = grad;
       ctx.fill();
 
-      // Subtle leaf vein highlight
       ctx.strokeStyle = 'rgba(145, 235, 175, 0.25)';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -249,7 +245,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       const bx = t.x + sway * (t.y * -0.04);
       const by = t.y;
 
-      // Stem curving gracefully down to the ribbon tie point (0, 65)
       const stemGrad = ctx.createLinearGradient(bx, by, 0, 65);
       stemGrad.addColorStop(0, '#368f58');
       stemGrad.addColorStop(1, '#123821');
@@ -261,12 +256,10 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.quadraticCurveTo(bx * 0.65, (by + 65) * 0.5, 0, 68);
       ctx.stroke();
 
-      // Tulip Flower Head
       ctx.translate(bx, by);
       ctx.rotate(t.angle + sway * 0.04);
       ctx.scale(t.scale, t.scale);
 
-      // Soft ambient glow behind flower head
       const glow = ctx.createRadialGradient(0, -12, 2, 0, -12, 34);
       glow.addColorStop(0, `hsla(${t.hue}, 100%, 70%, 0.32)`);
       glow.addColorStop(1, 'rgba(255, 77, 148, 0)');
@@ -275,7 +268,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.arc(0, -12, 34, 0, Math.PI * 2);
       ctx.fill();
 
-      // Back center inner petal
       const innerGrad = ctx.createLinearGradient(0, 12, 0, -34);
       innerGrad.addColorStop(0, `hsl(${t.hue - 8}, 85%, 32%)`);
       innerGrad.addColorStop(0.6, `hsl(${t.hue}, 92%, 58%)`);
@@ -287,7 +279,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.bezierCurveTo(14, -24, 15, 6, 0, 12);
       ctx.fill();
 
-      // Left cupped velvet petal
       const leftGrad = ctx.createLinearGradient(-18, 10, 4, -30);
       leftGrad.addColorStop(0, `hsl(${t.hue - 10}, 88%, 28%)`);
       leftGrad.addColorStop(0.55, `hsl(${t.hue}, 95%, 54%)`);
@@ -302,7 +293,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.lineWidth = 0.9;
       ctx.stroke();
 
-      // Right cupped velvet petal
       const rightGrad = ctx.createLinearGradient(18, 10, -4, -30);
       rightGrad.addColorStop(0, `hsl(${t.hue - 10}, 88%, 26%)`);
       rightGrad.addColorStop(0.55, `hsl(${t.hue - 2}, 94%, 50%)`);
@@ -345,7 +335,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
 
     function drawLuxuryWrap() {
       ctx.save();
-      // Back dark luxury paper cone
       const backPaper = ctx.createLinearGradient(0, -90, 0, 130);
       backPaper.addColorStop(0, '#2a1236');
       backPaper.addColorStop(1, '#0e0514');
@@ -362,7 +351,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.lineWidth = 1.2;
       ctx.stroke();
 
-      // Front folded matte-plum & gold-trimmed wrap
       const frontLeft = ctx.createLinearGradient(-85, -10, 10, 130);
       frontLeft.addColorStop(0, '#1f0b29');
       frontLeft.addColorStop(1, '#09030d');
@@ -391,14 +379,12 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.lineWidth = 1.4;
       ctx.stroke();
 
-      // Metallic Satin Gold Ribbon Bow at waist (0, 66)
       const goldGrad = ctx.createLinearGradient(-30, 55, 30, 78);
       goldGrad.addColorStop(0, '#d99b26');
       goldGrad.addColorStop(0.5, '#ffe28a');
       goldGrad.addColorStop(1, '#c98512');
       ctx.fillStyle = goldGrad;
 
-      // Left & right ribbon loops
       ctx.beginPath();
       ctx.ellipse(-18, 64, 18, 8, -0.25, 0, Math.PI * 2);
       ctx.fill();
@@ -406,7 +392,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.ellipse(18, 64, 18, 8, 0.25, 0, Math.PI * 2);
       ctx.fill();
 
-      // Ribbon tails
       ctx.beginPath();
       ctx.moveTo(-4, 68);
       ctx.lineTo(-22, 105);
@@ -421,7 +406,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.lineTo(0, 72);
       ctx.fill();
 
-      // Center knot
       ctx.beginPath();
       ctx.roundRect(-7, 59, 14, 13, 4);
       ctx.fill();
@@ -439,7 +423,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.save();
       ctx.translate(w / 2, h * 0.52);
 
-      // 1. Back luxury paper cone
       const backPaper = ctx.createLinearGradient(0, -130, 0, 120);
       backPaper.addColorStop(0, '#2a1236');
       backPaper.addColorStop(1, '#0d0412');
@@ -456,24 +439,19 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       ctx.lineWidth = 1.4;
       ctx.stroke();
 
-      // 2. Baby's breath delicate sprays
       babysBreath.forEach(b => drawBabysBreath(b, sway));
 
-      // 3. Rich Botanical Tulip Leaves
       drawLeaf(-18, 55, -0.58 + sway * 0.02, 135, 22, true);
       drawLeaf(18, 55, 0.58 + sway * 0.02, 135, 22, true);
       drawLeaf(-10, 50, -0.28 + sway * 0.02, 145, 20, false);
       drawLeaf(10, 50, 0.28 + sway * 0.02, 145, 20, false);
 
-      // 4. All 11 Layered Velvet Tulips
       tulips.forEach(t => drawRealisticTulip(t, sway));
 
-      // 5. Front folded wrap & satin gold bow
       drawLuxuryWrap();
 
       ctx.restore();
 
-      // 6. Floating Golden & Rose Bokeh Dust
       bokeh.forEach(p => {
         p.y -= p.speedY;
         if (p.y < 0) p.y = h;
@@ -490,7 +468,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
     }
     requestAnimationFrame(renderBouquet);
 
-    // Letter Modal Handlers
     function openLetter() {
       document.getElementById('letterModal').style.display = 'flex';
     }
@@ -503,7 +480,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    // Real-time Pink & Gold Celebration Fireworks
     function startFireworks() {
       const fwCanvas = document.getElementById('fireworksCanvas');
       fwCanvas.style.display = 'block';
@@ -554,7 +530,6 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       animateFW();
     }
 
-    // Kiss Counter
     let kisses = 0;
     function sendKiss() {
       kisses++;
@@ -571,4 +546,10 @@ I love you way more than words could ever explain, baby 🥹💗♾️.
       setTimeout(() => {
         h.style.transform = 'translateY(-150px) scale(1.5)';
         h.style.opacity = '0';
-      }, 
+      }, 40);
+      setTimeout(() => h.remove(), 1050);
+    }
+  </script>
+</body>
+        </html>
+  
